@@ -86,10 +86,22 @@ The length of this question description is indicative of the average length of a
 \newcommand{\questionFigureFour} {
 \youranswer{Question Figure 4 - Replace this image with a figure depicting the training curves for the model with the best performance across experiments you have available. (Also edit the caption accordingly).
 %
-\begin{figure}[t]
+\begin{figure}
     \centering
-    \includegraphics[width=\linewidth]{example-image-duck}
-    \caption{Training curves for ? ? ?}
+    \begin{subfigure}[b]{\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/best_model_accuracy_performance.pdf}
+        \caption{Accuracy by epoch}
+    \end{subfigure}
+    %
+    \begin{subfigure}[b]{\linewidth}
+        \centering
+        \includegraphics[width=\textwidth]{figures/best_model_loss_performance.pdf}
+        \caption{Loss by epoch}
+    \end{subfigure}
+    \caption{Training and validation curves in terms of classification
+accuracy (a) and loss (b) on the CIFAR100 dataset
+for the best performing model: VGG38 BN+RC.}
     \label{fig:grad_flow_bestModel}
 \end{figure}
 }
