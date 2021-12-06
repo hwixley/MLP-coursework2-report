@@ -26,14 +26,24 @@
 \newcommand{\questionOne} {
 \youranswer{Question 1 - Use Figures 1, 2, and 3 to identify the Vanishing Gradient Problem (which of these model suffers from it, and what are the consequences depicted?).
 
-The average length for an answer to this question is approximately 1/5 of the columns in a 2-column page}
+The average length for an answer to this question is approximately 1/5 of the columns in a 2-column page
+
+
+It is evident the VGG38 model suffers from the Vanishing Gradient Problem. The Vanishing Gradient Problem occurs due to the way our backpropagation algorithm works. As the backpropagation algorithm advances backwards from the output layer towards the input layer, the gradients often get smaller and smaller and approach 0 which eventually leaves the weights of the initial or lower layers nearly unchanged. As a result, the gradient descent never converges to the optimum and prevents the model from being trained effectively.
+
+We can identify if the gradients of a model are vanishing if: the parameters of higher layers change significantly whereas the parameters of lower layers would not change much (or at all), the model weights become 0 during training, the model learns very slowly and perhaps the training stagnates at a very early stage just after a few iterations.
+}
 }
 
 %% Question 2:
 \newcommand{\questionTwo} {
 \youranswer{Question 2 - Describe Batch Normalization (BN) by using equations. Consider both training and test time and explain how BN addresses the vanishing gradient problem. Note that you are not required to provide the derivation of gradients w.r.t. weights for BN weights.
 
-The average length of an answer to this question would be around 2/3 of a column in a 2-column page}
+The average length of an answer to this question would be around 2/3 of a column in a 2-column page
+
+
+
+}
 }
 
 %% Question 3:
