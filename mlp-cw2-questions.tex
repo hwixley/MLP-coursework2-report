@@ -44,9 +44,25 @@ Training deep neural networks is complicated due to a problem called "internal c
 
 Now how do we perform batch normalisation in training?
 
-Process for mini-batch $\mathcal{B}$:\\
-1) Compute the mean and variance for the activations in the mini-batch\\
-2) Normalise all of these activations using this mean and variance\\
+
+
+Batch Normalizing Transform applied to activation $a$ over a mini-batch $\mathcal{B}$:
+
+Let $\mathcal{B} = \{a_1...a_m\}$, $|\mathcal{B}| = M$, and $a_i = w_i x$
+
+\begin{enumerate}
+    \item Compute the mean and variance:\\
+    $\mu_\mathcal{B} = \frac{1}{M} \sum_{i=1}^{M} u_i^m$ 
+    \+ \+ \+ and \+ \+ \+
+    $\sigma_\mathcal{B}^2 = \frac{1}{M}\sum_{i=1}^M (a_i - \mu_\mathcal{B})^2$
+    \item Normalise all the values in the mini-batch:\\
+    $\hat a_i = \frac{a_i - \mu_\mathcal{B}}{\sqrt{\sigma_\mathcal{B}^2 + \epsilon}}$\\
+    where $\epsilon$ is a very small constant value added to the variance to prevent us from dividing by 0
+    \item Shift and scale all the normalised values in the mini-batch using learned parameters $\gamma$ and $\beta$:\\
+    $z_i = \gamma_i \hat a_i + \beta_i = \text{batchNorm}(a_i)$
+\end{enumerate}
+1) \\
+2) \\
 3) Shift and scale these normalised activations using learned parameters $\gamma$ and $\beta$\\
 
 Input: values of x over a mini-batch $\mathcal{B} = \{x_{1...m}\}$, and the parameters to be learned ($\gamma$ and $\beta$)
