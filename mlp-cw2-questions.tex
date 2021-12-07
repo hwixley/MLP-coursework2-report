@@ -47,7 +47,21 @@ Training deep neural networks is challenging as they can be sensitive to the ini
 In order to address this problem we normalize layer inputs by a process called batch normalisation. Batch normalization is a technique for training very deep neural networks that standardizes the inputs to a layer for each mini-batch. This technique allows us to use much higher learning rates, be less careful about weight initialisation, and can even act as a regularizer (in some cases it can eliminate the need for smoothing techniques such as Dropout).
 
 
-What is BN - train time *(explain equations)*:
+Performing batch normalisation in training:
+
+
+Process for each minibatch:\\
+1) Compute the mean and variance of each hidden unit activation across the minibatch (size m)\
+2) Normalise all of these activations using this mean and variance\
+3) Shift and scale these normalised activations using learned parameters $\gamma$ and $\beta$
+
+Input: values of x over a mini-batch $\mathcal{B} = \{x_{1...m}\}$, and the parameters to be learned ($\gamma$ and $\beta$)
+
+1) Calculate the mini-batch mean: $\mu_\beta = \frac{1}{m} \sum_{i=1}^{m} x_i$
+
+2) Calculate the mini-batch variance: $\sigma_{\mathcal{B}}^2 = \frac{1}{m}\sum$
+
+Output: $\{y_i = BN_{\gamma , \beta}(x_i)\}$
 
 
 What is BN - test time *(explain equations)*:
