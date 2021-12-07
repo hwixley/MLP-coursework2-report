@@ -37,18 +37,12 @@ This problem is especially evident when comparing the performance of the VGG38 m
 
 %% Question 2:
 \newcommand{\questionTwo} {
-\youranswer{Question 2 - Describe Batch Normalization (BN) by using equations. Consider both training and test time and explain how BN addresses the vanishing gradient problem. Note that you are not required to provide the derivation of gradients w.r.t. weights for BN weights.
+\youranswer{
+%Question 2 - Describe Batch Normalization (BN) by using equations. Consider both training and test time and explain how BN addresses the vanishing gradient problem. Note that you are not required to provide the derivation of gradients w.r.t. weights for BN weights.
+%The average length of an answer to this question would be around 2/3 of a column in a 2-column page
+Training deep neural networks is complicated due to a problem called "internal covariate shift". This problem occurs when the distribution of each layer's inputs varies during training as the parameters of the preceding layers change. This makes it infamously difficult to train models with saturating non-linearities as it necessitates lower learning rates and careful parameter setup. In order to address this problem we normalize the layer inputs by a process called batch normalisation. Batch normalization is a technique for training very deep neural networks that standardizes the inputs to a layer for each mini-batch. This technique allows us to use much higher learning rates, be less careful about weight initialisation, and can even act as a regularizer (in some cases it can eliminate the need for smoothing techniques such as Dropout).
 
-The average length of an answer to this question would be around 2/3 of a column in a 2-column page
-
-What is BN *(explain equations)*:
-Training deep neural networks is challenging as they can be sensitive to the initial random weights and configuration of the learning algorithm. This is due to a phenomena called "internal covariate shift" where the distribution of each layer's inputs varies during training as the parameters of the preceding layers change which makes it infamously difficult to train models with saturating non-linearities as it necessitates lower learning rates and careful parameter setup. 
-
-In order to address this problem we normalize layer inputs by a process called batch normalisation. Batch normalization is a technique for training very deep neural networks that standardizes the inputs to a layer for each mini-batch. This technique allows us to use much higher learning rates, be less careful about weight initialisation, and can even act as a regularizer (in some cases it can eliminate the need for smoothing techniques such as Dropout).
-
-
-Performing batch normalisation in training:
-
+Now how do we perform batch normalisation in training?
 
 Process for mini-batch $\mathcal{B}$:\\
 1) Compute the mean and variance for the activations in the mini-batch\\
@@ -64,7 +58,8 @@ Input: values of x over a mini-batch $\mathcal{B} = \{x_{1...m}\}$, and the para
 Output: $\{y_i = BN_{\gamma , \beta}(x_i)\}$
 
 
-What is BN - test time *(explain equations)*:
+How do we implement batch normalisation at test time?
+Batch normalisation is simply a technique for helping us to optimise the weights of a deep neural network and thus does not affect the testing process at all since these weights have already been derived.
 
 
 How BN solves VGP:
