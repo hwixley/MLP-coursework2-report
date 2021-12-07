@@ -28,14 +28,15 @@
 
 The average length for an answer to this question is approximately 1/5 of the columns in a 2-column page
 
-Identify the model with VGP:
-It is evident the VGG38 model suffers from the Vanishing Gradient Problem. 
-
-What is VGP and how does it work:
-The Vanishing Gradient Problem occurs due to the way our backpropagation algorithm works. As the backpropagation algorithm advances backwards from the output layer towards the input layer, the gradients often get smaller and smaller and approach 0 which eventually leaves the weights of the initial or lower layers nearly unchanged. As a result, the gradient descent never converges to the optimum and prevents the model from being trained effectively.
-
 How can we identify VGP:
 We can identify if the gradients of a model are vanishing if: the parameters of higher layers change significantly whereas the parameters of lower layers would not change much (or at all), the model weights become 0 during training, the model learns very slowly and perhaps the training stagnates at a very early stage just after a few iterations.
+
+Identify the model with VGP:
+After analysing figures 1, 2, and 3 it is evident that the VGG38 model suffers from the Vanishing Gradient Problem. 
+
+This is evident especially when comparing this with the performance and gradient flow of the shallower VGG8 model. We would expect the VGG38 to perform better than VGG8 due to the very large increase in the number of layers, however, this is not the case. We can see from figure 1b that the train and validation accuracies for the VGG38 model stagnate around 0 throughout all 100 training epochs, unlike the VGG8 model where the train and validsation accuracies continue to increase with the number of epochs with a logarithmic curve.
+
+Even without analysing any of these figures we know that the Vanishing Gradient Problem occurs when we start to train very deep networks (with lots of layers) thus we can expect the model that suffers from this problem the most will be the one that has the most layers (the VGG38 model).
 
 How these causes are evident in figure 3:
 
