@@ -34,7 +34,7 @@ We can identify if the gradients of a model are vanishing if: the parameters of 
 Identify the model with VGP:
 After analysing figures 1, 2, and 3 it is evident that the VGG38 model suffers from the Vanishing Gradient Problem. 
 
-This is evident especially when comparing this with the performance and gradient flow of the shallower VGG8 model. We would expect the VGG38 to perform better than VGG8 due to the very large increase in the number of layers, however, this is not the case. We can see from figure 1b that the train and validation accuracies for the VGG38 model stagnate around 0 throughout all 100 training epochs, unlike the VGG8 model where the train and validsation accuracies continue to increase with the number of epochs with a logarithmic curve.
+This is evident especially when comparing this with the performance and gradient flow of the shallower VGG8 model. We would expect the VGG38 to perform better than VGG8 due to the very large increase in the number of layers, however, this is not the case. We can see from figure 1b that the train and validation accuracies for the VGG38 model stagnate around 0 throughout all 100 training epochs, unlike the VGG8 model where the train and validation accuracies continue to increase with the number of epochs with a logarithmic curve.
 
 Even without analysing any of these figures we know that the Vanishing Gradient Problem occurs when we start to train very deep networks (with lots of layers) thus we can expect the model that suffers from this problem the most will be the one that has the most layers (the VGG38 model).
 
