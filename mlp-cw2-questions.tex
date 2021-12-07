@@ -75,19 +75,32 @@ So how are we going to evaluate this model now? Unlike the training phase, we ma
 
 %% Question 3:
 \newcommand{\questionThree} {
-\youranswer{Question 3 - Describe Residual Connections (RC) by using equations. Consider both training and test time and explain how RC address the vanishing gradient problem.
+\youranswer{
+%Question 3 - Describe Residual Connections (RC) by using equations. Consider both training and test time and explain how RC address the vanishing gradient problem.
+%The average length of an answer to this question would be around 1/2 of a column in a 2-column page
+%What is RC *(explain equations)*:
+Residual connections (or skip connections) are used to allow gradients to flow through a network directly without passing through non-linear activation functions. Non-linear activation functions, by nature of being non-linear, cause the gradients to vanish/explode for very deep neural networks. Residual connections in practice essentially form a "bus" which flows right the way through the network which helps to prevent vanishing/exploding gradients by making these paths carry gradient throughout the entire network. Each block of network layers taps the values at a point along the bus, and then adds values onto the bus. This means that the blocks do affect the gradients, and conversely, affect the forward output values too.
 
-The average length of an answer to this question would be around 1/2 of a column in a 2-column page
+Let us consider $H(x)$ as an underlying mapping to be fit by a few stacked layers (not necessarily the entire net),
+with x denoting the inputs to the first of these layers. If one
+hypothesizes that multiple nonlinear layers can asymptotically approximate complicated functions2
+, then it is equivalent to hypothesize that they can asymptotically approximate the residual functions, i.e., $H(x) − x$ (assuming that
+the input and output are of the same dimensions). So
+rather than expect stacked layers to approximate $H(x)$, we
+explicitly let these layers approximate a residual function
+$F(x) = H(x) − x$. The original function thus becomes
+$F(x)+x$. Although both forms should be able to asymptotically approximate the desired functions (as hypothesized),
+the ease of learning might be different.
 
-What is RC *(explain equations)*:
+
+%Instead of hoping each few stacked layers directly fit a desired underlying mapping, we explicitly let these layers fit a residual mapping. Formally, denoting the desired underlying mapping as H(x), we let the stacked nonlinear layers fit another mapping of F(x) := H(x)−x. The original mapping is recast into F(x)+x. We hypothesize that it is easier to optimize the residual mapping than to optimize the original, unreferenced mapping. To the extreme, if an identity mapping were optimal, it would be easier to push the residual to zero than to fit an identity mapping by a stack of nonlinear layers
+
+%What is RC - train time *(explain equations)*:
+
+%What is RC - test time *(explain equations)*:
 
 
-What is RC - train time *(explain equations)*:
-
-What is RC - test time *(explain equations)*:
-
-
-How does RC address VGP:
+%How does RC address VGP:
 
 }
 }
