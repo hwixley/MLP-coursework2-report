@@ -40,14 +40,13 @@ This problem is especially evident when comparing the performance of the VGG38 m
 \youranswer{
 %Question 2 - Describe Batch Normalization (BN) by using equations. Consider both training and test time and explain how BN addresses the vanishing gradient problem. Note that you are not required to provide the derivation of gradients w.r.t. weights for BN weights.
 %The average length of an answer to this question would be around 2/3 of a column in a 2-column page
-Training deep neural networks is complicated due to a problem called "internal covariate shift". This problem occurs when the distribution of each layer's inputs varies during training as the parameters of the preceding layers change. This makes it infamously difficult to train models with saturating non-linearities as it necessitates lower learning rates and careful parameter setup. In order to address this problem we normalize the layer inputs by a process called batch normalisation. Batch normalization is a technique for training very deep neural networks that standardizes the inputs to a layer for each mini-batch. This technique allows us to use much higher learning rates, be less careful about weight initialisation, and can even act as a regularizer (in some cases it can eliminate the need for smoothing techniques such as Dropout).
+Training deep neural networks is complicated due to a problem called "internal covariate shift". This problem occurs when the distribution of each layer's inputs varies during training as the parameters of the preceding layers change. This makes it infamously difficult to train models with saturating non-linearities as it necessitates lower learning rates and careful parameter setup. In order to address this problem we normalize the layer inputs by a process called batch normalisation. Batch normalization is a technique for training very deep neural networks that standardizes the inputs to a layer for each mini-batch. This technique allows us to use much higher learning rates, be less careful about weight initialisation, and can even act as a regularizer (it can eliminate the need for smoothing techniques such as Dropout).
 
-So how do we train a network with batch normalization?
-Batch normalization is 
+%\subsubsection{Training a network with batch normalisation}
+Batch-normalisation is incorporated into a network by adding an operation in the model just before or after the activation function of each hidden layer. This operation simply normalizes the input data using the Batch Normalizing Transform algorithm:
 
-\underline{Batch Normalizing Transform applied to activation $a$}\\
-\underline{over a mini-batch $\mathcal{B}$:}\\
-Consider a mini-batch $\mathcal{B}$ of size m. Since the normalization is applied to each activation independently, let us focus on a particular activation $a^{k}$ and omit $k$ for clarity. We have m values of this activation in the mini-batch
+\underline{The Batch Normalizing Transform algorithm}\\
+Consider a mini-batch $\mathcal{B}$ of size m. Since the normalization is applied to the inputs of each activation independently, let us focus on a particular activation $a^{k}$ and omit $k$ for clarity. We have m inputs for this activation in the mini-batch
 \[\mathcal{B} = \{a_1...a_m\}\]
 \begin{center}
 where $a_i = w_i x$    
@@ -65,21 +64,14 @@ where $a_i = w_i x$
     $z_i = \gamma_i \hat a_i + \beta_i = \text{batchNorm}(a_i)$
 \end{enumerate}
 
-For a given epoch, this is completed for all the activations in all the layers of the network, once this has all been computed the $\gamma$ and $\beta$ parameters are then trained through gradient descent in conjunction with all the other network parameters.
+Once this algorithm has been completed for all the activations the $\gamma$ and $\beta$ parameters are then updated through gradient descent based optimisation in conjunction with all the other network parameters.
+
+%\subsubsection{Evaluating a network with batch normalisation}
+So how are we going to evaluate this model now? Unlike the training phase, we may not have a full batch to feed into the model during the evaluation phase. To tackle this problem, we store the final means and standard deviations determined for each activation and these are used to normalize the testing data using the Batch Normalizing Transform algorithm.
 
 
-How do we implement batch normalisation at test time?
-Batch normalisation is simply a technique for helping us to optimise the weights of a deep neural network and thus does not affect the testing process at all since these weights have already been derived.
-
-
-How BN solves VGP:
-Batch normalisation uses minibatch statistics in order to normalise the activations of each layer. 
-It consists of adding an operation in the model just before or after the activation function of each hidden layer.
-This operation simply zero-centers and normalizes each input, then scales and shifts the result using two new parameter vectors per layer: one for scaling, the other for shifting.
-In other words, the operation lets the model learn the optimal scale and mean of each of the layer’s inputs.
-To zero-center and normalize the inputs, the algorithm needs to estimate each input’s mean and standard deviation.
-It does so by evaluating the mean and standard deviation of the input over the current mini-batch (hence the name “Batch Normalization”).
-
+%\subsubsection{How batch normalisation addresses the vanishing gradient problem}
+%Batch normalisation uses minibatch statistics in order to normalise the activations of each layer. It consists of adding an operation in the model just before or after the activation function of each hidden layer. This operation simply zero-centers and normalizes each input, then scales and shifts the result using two new parameter vectors per layer: one for scaling, the other for shifting. In other words, the operation lets the model learn the optimal scale and mean of each of the layer’s inputs. To zero-center and normalize the inputs, the algorithm needs to estimate each input’s mean and standard deviation. It does so by evaluating the mean and standard deviation of the input over the current mini-batch (hence the name “Batch Normalization”).
 }
 }
 
