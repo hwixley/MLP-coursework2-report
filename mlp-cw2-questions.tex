@@ -70,6 +70,7 @@ Once this algorithm has been completed for all the activations the $\gamma$ and 
 So how are we going to evaluate this model now? Unlike the training phase, we may not have a full batch to feed into the model during the evaluation phase. To tackle this problem, we store the final means and standard deviations determined for each activation and these are used to normalize the testing data using the Batch Normalizing Transform algorithm.
 
 
+Batch normalization helps address the vanishing gradient problem by reducing the effect of internal covariate shift that the backpropagation algorithm induces on the data for very deep networks. 
 %\subsubsection{How batch normalisation addresses the vanishing gradient problem}
 %Batch normalisation uses minibatch statistics in order to normalise the activations of each layer. It consists of adding an operation in the model just before or after the activation function of each hidden layer. This operation simply zero-centers and normalizes each input, then scales and shifts the result using two new parameter vectors per layer: one for scaling, the other for shifting. In other words, the operation lets the model learn the optimal scale and mean of each of the layer’s inputs. To zero-center and normalize the inputs, the algorithm needs to estimate each input’s mean and standard deviation. It does so by evaluating the mean and standard deviation of the input over the current mini-batch (hence the name “Batch Normalization”).
 }
