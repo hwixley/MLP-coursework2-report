@@ -50,10 +50,10 @@ In order to address this problem we normalize layer inputs by a process called b
 Performing batch normalisation in training:
 
 
-Process for each minibatch:\\
-1) Compute the mean and variance of each hidden unit activation across the minibatch (size m)\
-2) Normalise all of these activations using this mean and variance\
-3) Shift and scale these normalised activations using learned parameters $\gamma$ and $\beta$
+Process for mini-batch $\mathcal{B}$:\\
+1) Compute the mean and variance for the activations in the mini-batch\\
+2) Normalise all of these activations using this mean and variance\\
+3) Shift and scale these normalised activations using learned parameters $\gamma$ and $\beta$\\
 
 Input: values of x over a mini-batch $\mathcal{B} = \{x_{1...m}\}$, and the parameters to be learned ($\gamma$ and $\beta$)
 
