@@ -81,21 +81,19 @@ So how are we going to evaluate this model now? Unlike the training phase, we ma
 %What is RC *(explain equations)*:
 Residual connections (or skip connections) are used to allow gradients to flow through a network directly without passing through non-linear activation functions. Non-linear activation functions, by nature of being non-linear, cause the gradients to vanish/explode for very deep neural networks. Residual connections in practice essentially form a "bus" which flows right the way through the network helping to prevent vanishing/exploding gradients by making these paths carry gradient throughout the entire network. Each block of network layers taps the values at a point along the bus, and then adds values onto the bus. This means that the blocks do affect the gradients, and conversely, affect the forward output values too.
 
-The principal idea behind using residual connections was to see if it would be easier to optimize a residual mapping of the input rather than the original, unreferenced mapping of the input. This was found to be true for very deep neural networks as these residual connections helped address the vanishing/exploding gradient problem that prevents very deep neural networks from being trained at all.
+The principal idea behind residual connections is that is easier for deep neural networks to optimize residual mappings of the input rather than the original, unreferenced mapping of the input. These residual mappings can then be used to calculate the desired underlying mapping of the input:\\
+Let $H(x)$ be the desired underlying mapping. We let the stacked non-linear layers in our network fit another mapping of $F(x) = H(x) - x$. Thus we can use this to recast the original mapping into $F(x) + x$ which is equivalent to $H(x)$.
 
+\emph{*Note since we are performing an addition operation across different layers we must ensure the dimensions of $F(x)$ and $x$ match. This is typically ensured by just creating these residual connections in a single block of convolutional layers.}
 
-Let us consider $H(x)$ as an underlying mapping to be fit by a few stacked layers (not necessarily the entire network), with x denoting the inputs to the first of these layers. If one hypothesizes that multiple nonlinear layers can asymptotically approximate complicated functions, then it is equivalent to hypothesize that they can asymptotically approximate the residual functions, i.e., $H(x) − x$ (assuming that the input and output are of the same dimensions). So rather than expect stacked layers to approximate $H(x)$, we explicitly let these layers approximate a residual function $F(x) = H(x) − x$. The original function thus becomes $F(x)+x$. Although both forms should be able to asymptotically approximate the desired functions (as hypothesized), the ease of learning might be different.
+Thus to implement this technique in training we simply create a connection from the activation output in layer $n$ to the activation input in layer $n+2$. This ultimately allows us to retain the activation output from layer $n$, skip the non-linear activation in layer $n+1$, and add this output to the activation input in layer $n+2$ (thus forming the residual mapping). This is then repeated all the way down the network.
 
-
+Now, due to the fact these residual connections were used to alter layer inputs throughout the network we do not have to perform any changes on our model for evaluation! Due to the fact these residual connections were used in training they must be used in evaluation too to ensure the model treats inputs in the same way
+%Let us consider $H(x)$ as an underlying mapping to be fit by a few stacked layers (not necessarily the entire network), with x denoting the inputs to the first of these layers. If one hypothesizes that multiple nonlinear layers can asymptotically approximate complicated functions, then it is equivalent to hypothesize that they can asymptotically approximate the residual functions, i.e., $H(x) − x$ (assuming that the input and output are of the same dimensions). So rather than expect stacked layers to approximate $H(x)$, we explicitly let these layers approximate a residual function $F(x) = H(x) − x$. The original function thus becomes $F(x)+x$. Although both forms should be able to asymptotically approximate the desired functions (as hypothesized), the ease of learning might be different.
 %Instead of hoping each few stacked layers directly fit a desired underlying mapping, we explicitly let these layers fit a residual mapping. Formally, denoting the desired underlying mapping as H(x), we let the stacked nonlinear layers fit another mapping of F(x) := H(x)−x. The original mapping is recast into F(x)+x. We hypothesize that it is easier to optimize the residual mapping than to optimize the original, unreferenced mapping. To the extreme, if an identity mapping were optimal, it would be easier to push the residual to zero than to fit an identity mapping by a stack of nonlinear layers
-
 %What is RC - train time *(explain equations)*:
-
 %What is RC - test time *(explain equations)*:
-
-
 %How does RC address VGP:
-
 }
 }
 
@@ -164,7 +162,7 @@ In the future, to further understand the vanishing/exploding gradient problem I 
 
 %% Question Figure 3:
 \newcommand{\questionFigureThree} {
-\youranswer{Question Figure 3 - Replace this image with a figure depicting the average gradient across layers, for the VGG38 model.
+\youranswer{%Question Figure 3 - Replace this image with a figure depicting the average gradient across layers, for the VGG38 model.
 %
 \begin{figure}[t]
     \centering
@@ -177,7 +175,7 @@ In the future, to further understand the vanishing/exploding gradient problem I 
 
 %% Question Figure 4:
 \newcommand{\questionFigureFour} {
-\youranswer{Question Figure 4 - Replace this image with a figure depicting the training curves for the model with the best performance across experiments you have available. (Also edit the caption accordingly).
+\youranswer{%Question Figure 4 - Replace this image with a figure depicting the training curves for the model with the best performance across experiments you have available. (Also edit the caption accordingly).
 %
 \begin{figure}
     \centering
@@ -202,7 +200,7 @@ for the best performing model: VGG38 BN+RC}
 
 %% Question Figure 5:
 \newcommand{\questionFigureFive} {
-\youranswer{Question Figure 5 - Replace this image with a figure depicting the average gradient across layers, for the model with the best performance across experiments you have available. (Also edit the caption accordingly).
+\youranswer{%Question Figure 5 - Replace this image with a figure depicting the average gradient across layers, for the model with the best performance across experiments you have available. (Also edit the caption accordingly).
 %
 \begin{figure}[t]
     \centering
@@ -218,11 +216,11 @@ for the best performing model: VGG38 BN+RC}
 %% Question Table 1:
 \newcommand{\questionTableOne} {
 \youranswer{
-Question Table 1 - Fill in Table 1 with the results from your experiments on 
-\begin{enumerate}
-    \item \textit{VGG38 BN (LR 1e-3)}, and 
-    \item \textit{VGG38 BN + RC (LR 1e-2)}.
-\end{enumerate}
+%Question Table 1 - Fill in Table 1 with the results from your experiments on 
+%\begin{enumerate}
+%    \item \textit{VGG38 BN (LR 1e-3)}, and 
+%    \item \textit{VGG38 BN + RC (LR 1e-2)}.
+%\end{enumerate}
 %
 \begin{table*}[t]
     \centering
