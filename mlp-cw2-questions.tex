@@ -108,7 +108,6 @@ Let us consider $H(x)$ as an underlying mapping to be fit by a few stacked layer
 %    \item Learn more about the behaviour of BN and RC (explain what you are trying to learn and how).
 %\end{itemize}
 %The average length for an answer to this question is approximately 1 of the columns in a 2-column page
-
 \begin{table*}[t]
     \centering
     \begin{tabular}{lr|ccccc}
@@ -122,24 +121,29 @@ Let us consider $H(x)$ as an underlying mapping to be fit by a few stacked layer
     \caption{Experiment evaluation results}
     \label{tab:q4_final_scores}
 \end{table*}
+From the results in tables \ref{tab:CIFAR_results} and \ref{tab:q4_final_scores}, it is evident that the combination of batch normalisation and residual connections was a great solution to the vanishing/exploding gradient problem given VGG38 BN+RC produced the best model with 61.8\% validation accuracy. 
 
-From these results it is evident that the combination of batch normalisation and residual connections was a great solution to the vanishing/exploding gradient problem. 
+This is further reinforced when comparing the gradient flow of the \emph{working} VGG08 model in figure \ref{fig:grad_flow_08} with that of the VGG38 BN+RC model in figure \ref{fig:grad_flow_bestModel}. We can see from this comparison that the shapes for these gradient flow graphs are very similar with high gradient variability throughout all the epochs in all the layers (illustrated by the thick band of blue lines), and spikes in gradients at the input and output layers. Conversely, given our comparison of the gradient flow for the VGG08 and VGG38 models in section 2 this finding also indicates the large disparity between the gradient flow of the VGG38 model in figure \ref{fig:grad_flow_38} and the VGG38 BN+RC model in figure \ref{fig:grad_flow_bestModel}. The high similarity of gradient flows between the working models (VGG08 and VGG38 BN+RC) and the large disparities of gradient flow between the VGG38 models (VGG38 and VGG38 BN+RC) is a direct indication of how batch normalisation and residual connections can fix the vanishing/exploding gradients problem for a deep neural network.
 
-Other possible fixes for this problem are: training shallower networks and gradually add more layers, using modified optimisation algorithms (such as RMSProp and gradient clipping), using modified hidden unit transfer functions (such as LSTM), or using a weight filler (such as Xavier initialization).
+%The difference of gradient flows between the old and new VGG38 models is a direct indication of
+%This is further reinforced when comparing the gradient flow of the VGG38 model in figure \ref{fig:grad_flow_38} with that of the VGG38 BN+RC model in figure \ref{fig:grad_flow_bestModel}. From this comparison we can see that unlike the gradient flow for the old network there is high variability of gradients throughout the epochs in all the layers (illustrated by the thick band of blue lines), and the gradient flow spikes at the input and output layers.
 
-OTHER VGP FIXES:
-- train shallower networks and gradually add more layers
-- modified optimisation algorithms: RMSProp, gradient clipping
-- modified hidden unit transfer functions: LSTM
+Other possible fixes for this problem are: training shallower networks and gradually add more layers, using modified optimisation algorithms (such as RMSProp and gradient clipping), using modified hidden unit transfer functions (such as LSTM), using a weight filler (such as Xavier initialization), or adding "auxiliary classifiers" to middle layers.
 
-CUSTOM EXPERIMENTS:
-- more layers
-- placement of BN layers
-- placement of RCs
-- type of activation function
-- number of epochs (for early stopping)
+In the future, if I were to run further experiments on our VGG08 and VGG38 models I would first like to experiment more with the configuration of batch normalisation and residual connections on our VGG38 model to get a better understanding of how well these techniques address the vanishing/exploding gradient problem in various settings. For batch normalisation I would like to test different placements of batch normalisation layers w.r.t. the activation function, test out batch normalisation
 
-FUTURE WORK:
+Firstly, I would optimise the placement of the batch normalisation layers in my network. Batch normalisation may be used on the inputs to the layer before or after the activation function in the previous layer. It is typically placed after the activation function for s-shaped functions such as tanh and sigmoid, and before the activation function for activations that may result in non-Gaussian distributions such as the rectified linear activation function. Thus, for further experiments I would like to implement models with varying BN layer placements, activation functions, and VGP solving techniques.
+
+pre-processing?
+try different network types? MLP RNNs resnets
+In the future, to make our models perform even better there are many things we could still optimise further. These include optimisations on the input parameters of our network such as: the number of epochs used, the batch size, the number of filters, the number of blocks in a stage, the number of stages, and the random seed used for weight initialisation. However, these could also include optimisations on the structure of our network such as: the type of activation function used, the placement of batch normalisation layers, the number of convolutional layers in a block, or the combinations of varying techniques that are used to solve the vanishing/exploding gradient problem.
+
+I would optimise the placement of the batch normalisation layers in my network. Batch normalisation may be used on the inputs to the layer before or after the activation function in the previous layer. It is typically placed after the activation function for s-shaped functions such as tanh and sigmoid, and before the activation function for activations that may result in non-Gaussian distributions such as the rectified linear activation function. Thus, for further experiments I would like to implement models with varying BN layer placements, activation functions, and VGP solving techniques.
+
+
+
+
+
 
 
 }
@@ -155,7 +159,7 @@ FUTURE WORK:
 %The length of this question description is indicative of the average length of a conclusion section
 In conclusion, it is evident that both batch normalisation and residual connections serve as great techniques to address the vanishing/exploding gradient problem when trying to train very deep neural networks.
 
-In future, I would like to experiment more with the setups in batch normalisation and residual connections.
+In the future, to make our models perform even better there are many things we could still optimise further. These include optimisations on the input parameters of our network such as: the number of epochs used, the batch size, the number of filters, the number of blocks in a stage, the number of stages, and the random seed used for weight initialisation. However, these could also include optimisations on the structure of our network such as: the type of activation function used, the placement of batch normalisation layers, the number of convolutional layers in a block, or the combinations of varying techniques that are used to solve the vanishing/exploding gradient problem.
 
 Firstly, for 
 
