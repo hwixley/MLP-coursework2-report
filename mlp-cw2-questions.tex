@@ -109,6 +109,33 @@ Let us consider $H(x)$ as an underlying mapping to be fit by a few stacked layer
 %\end{itemize}
 %The average length for an answer to this question is approximately 1 of the columns in a 2-column page
 
+\begin{table*}[t]
+    \centering
+    \begin{tabular}{lr|ccccc}
+    \toprule
+        Model                   & LR   & \# Params & Val loss & Val acc & Test loss & Test acc \\
+    \midrule
+        VGG38                   & 1e-3 & 336 K      & 4.61     & 0.64 & 4.61 & 1\\
+        VGG38 BN+RC             & 1e-2 & 339 K      & 1.79 & 61.8 & 1.83 & 60.37
+    \bottomrule
+    \end{tabular}
+    \caption{Experiment results (number of model parameters, Training and Validation loss and accuracy) for different combinations of VGG08, VGG38, Batch Normalisation (BN), and Residual Connections (RC), LR is learning rate.}
+    \label{tab:q4_final_scores}
+\end{table*}
+
+\begin{table*}[t]
+    \centering
+    \begin{tabular}{lr|cccc}
+    \toprule
+        Model                   & Best epoch & Val loss & Val acc & Test loss & Test acc \\
+    \midrule
+        VGG38                   & 1e-3 & 336 K      &  1.74      & 51.59     & 1.95     & 46.84 \\
+        VGG38 BN+RC             & 1e-2 & 339 K      &
+    \bottomrule
+    \end{tabular}
+    \caption{Experiment results (number of model parameters, Training and Validation loss and accuracy) for different combinations of VGG08, VGG38, Batch Normalisation (BN), and Residual Connections (RC), LR is learning rate.}
+    \label{tab:q4_best_scores}
+\end{table*} 
 
 SPEC EXPERIMENT RESULTS:
 - all val and test scores
